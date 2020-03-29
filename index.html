@@ -30,9 +30,69 @@
     </header>
     <div class="container">
       <!-- Timeblocks go here -->
+      <div class="row">
+          <!-- responsive variations -->
+          <div class="col-2"><h1 class="hour" value="10">10am</h1></div>
+          <div class="col-8"><textarea></textarea></div>
+          <div class="col-2"><button class="saveBtn">SAVE</button></div>
+      </div>
+
+      <div class="row">
+        <!-- responsive variations -->
+        <div class="col-2"><h1 class="hour" value="11">11am</h1></div>
+        <div class="col-8"><textarea></textarea></div>
+        <div class="col-2"><button class="saveBtn">SAVE</button></div>
+      </div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script>
+      $(document).ready(function() {
+
+        var dt = new Date();
+        var time = dt.getHours();
+
+        init();
+
+        function init(){
+          for(let i = 0; i < 8; i++)
+          {
+            let currentHour = i+9;
+
+            let $newDiv = $("<div>");
+            $newDiv.attr("class", "row")
+            $(".container").append($newDiv);
+
+            let $hourDiv = $("<div>");
+            $hourDiv.attr("class", "col-2");
+            $newDiv.append($hourDiv);
+
+            let $hourText = $("<h1>");
+            $hourText.attr("class", "hour");
+            $hourDiv.append($hourText);
+            
+            let $hourSpan = $("<span>");
+            // $hourSpan.attr("class", "hour");
+            $hourSpan.attr("data-index", currentHour);
+            if(currentHour <= 11)
+            {
+            $hourSpan.text(currentHour + "am");
+            }
+            else
+            {
+            $hourSpan.text(currentHour + "pm");
+            }
+            $hourText.append($hourSpan);
+
+
+
+          }
+        }
+
+      });
+
+    </script>
   </body>
 </html>
