@@ -30,19 +30,6 @@
     </header>
     <div class="container">
       <!-- Timeblocks go here -->
-      <div class="row">
-          <!-- responsive variations -->
-          <div class="col-2"><h1 class="hour" value="10">10am</h1></div>
-          <div class="col-8"><textarea></textarea></div>
-          <div class="col-2"><button class="saveBtn">SAVE</button></div>
-      </div>
-
-      <div class="row">
-        <!-- responsive variations -->
-        <div class="col-2"><h1 class="hour" value="11">11am</h1></div>
-        <div class="col-8"><textarea></textarea></div>
-        <div class="col-2"><button class="saveBtn">SAVE</button></div>
-      </div>
 
     </div>
 
@@ -53,7 +40,7 @@
 
         var dt = new Date();
         var time = dt.getHours();
-
+        
         init();
 
         function init(){
@@ -66,15 +53,15 @@
             $(".container").append($newDiv);
 
             let $hourDiv = $("<div>");
-            $hourDiv.attr("class", "col-2");
+            $hourDiv.attr("class", "hour col-sm-2");
             $newDiv.append($hourDiv);
 
             let $hourText = $("<h1>");
-            $hourText.attr("class", "hour");
             $hourDiv.append($hourText);
+
             
             let $hourSpan = $("<span>");
-            // $hourSpan.attr("class", "hour");
+            $hourSpan.attr("class", "currentHour");
             $hourSpan.attr("data-index", currentHour);
             if(currentHour <= 11)
             {
@@ -86,7 +73,21 @@
             }
             $hourText.append($hourSpan);
 
+            let $journalDiv = $("<div>");
+            $journalDiv.attr("class", "col-sm-8");
+            $newDiv.append($journalDiv);
 
+            let $journalText = $("<textarea>");
+            $journalDiv.append($journalText);
+
+            let $saveDiv = $("<div>");
+            $saveDiv.attr("class", "col-sm-2");
+            $newDiv.append($saveDiv);
+
+            let $saveButton = $("<button>");
+            $saveButton.attr("class", "col.sm-2 saveBtn");
+            $saveButton.text("Save");
+            $saveDiv.append($saveButton);
 
           }
         }
