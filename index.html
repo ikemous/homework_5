@@ -40,6 +40,7 @@
 
         let dt = new Date();
         let time = dt.getHours();
+        let currentObj;
         let toDoList = [];
         
         init();
@@ -58,7 +59,7 @@
 
           for(let i = 0; i < 8; i++)
           {
-            let currentHour = i+9;
+            let rowHour = i+9;
 
             let $newDiv = $("<div>");
             $newDiv.attr("class", "row")
@@ -73,15 +74,14 @@
 
             
             let $hourSpan = $("<span>");
-            $hourSpan.attr("class", "currentHour");
-            $hourSpan.attr("data-index", currentHour);
-            if(currentHour <= 11)
+            $hourSpan.attr("data-index", rowHour);
+            if(rowHour <= 11)
             {
-            $hourSpan.text(currentHour + "am");
+            $hourSpan.text(rowHour + "am");
             }
             else
             {
-            $hourSpan.text(currentHour + "pm");
+            $hourSpan.text(rowHour + "pm");
             }
             $hourText.append($hourSpan);
 
@@ -90,11 +90,13 @@
             $newDiv.append($journalDiv);
 
             let $journalText = $("<textarea>");
-            if(currentHour === time)
+            $journalText.attr("data-index", rowHour);
+            $journalText.attr("class", rowHour);
+            if(rowHour === time)
             {
               $journalText.addClass("present");
             }
-            else if(currentHour < time )
+            else if(rowHour < time )
             {
               $journalText.addClass("past");
             }
@@ -110,19 +112,34 @@
 
             let $saveButton = $("<button>");
             $saveButton.attr("class", "col.sm-2 saveBtn");
-            $saveButton.attr("data-index", currentHour);
+            $saveButton.attr("value", rowHour);
             $saveButton.text("Save");
             $saveDiv.append($saveButton);
 
           }
         }
 
+
         $(".saveBtn").click(function(){
-          
+
           let newToDo = {
-            time: "",
+            taskTime: "",
             task: ""
+          } 
+
+          newToDo.taskTime = this.value;
+
+          newToDo.task = $("." + newToDo.taskTime).val();
+          if(toDoList.includes(newToDo.taskTime))
+          {
+            console.log("Includes");
           }
+          else
+          {
+            toDoList.push(newToDo);
+          }
+          //Store Array Into localStorage
+          localStorage.setItem("toDo", JSON.stringify(toDoList));
 
         });
 
