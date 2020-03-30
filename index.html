@@ -38,12 +38,24 @@
     <script>
       $(document).ready(function() {
 
-        var dt = new Date();
-        var time = dt.getHours();
+        let dt = new Date();
+        let time = dt.getHours();
+        let toDoList = [];
         
         init();
 
         function init(){
+
+          //Grab toDoList From The Local Storage
+          toDoList = JSON.parse(localStorage.getItem("toDo"));
+          
+          //Check If The toDoList is empty
+          if(toDoList === null)
+          {
+              //Make toDoList List An Empty Array
+              toDoList = [];
+          }
+
           for(let i = 0; i < 8; i++)
           {
             let currentHour = i+9;
@@ -78,6 +90,18 @@
             $newDiv.append($journalDiv);
 
             let $journalText = $("<textarea>");
+            if(currentHour === time)
+            {
+              $journalText.addClass("present");
+            }
+            else if(currentHour < time )
+            {
+              $journalText.addClass("past");
+            }
+            else
+            {
+              $journalText.addClass("future");
+            }
             $journalDiv.append($journalText);
 
             let $saveDiv = $("<div>");
@@ -86,11 +110,21 @@
 
             let $saveButton = $("<button>");
             $saveButton.attr("class", "col.sm-2 saveBtn");
+            $saveButton.attr("data-index", currentHour);
             $saveButton.text("Save");
             $saveDiv.append($saveButton);
 
           }
         }
+
+        $(".saveBtn").click(function(){
+          
+          let newToDo = {
+            time: "",
+            task: ""
+          }
+
+        });
 
       });
 
