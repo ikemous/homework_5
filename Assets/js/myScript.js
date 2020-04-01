@@ -1,6 +1,5 @@
  $(document).ready(function() {
 
-
     //Local Variables To Be Used
     let toDoList = [];//List to hold rask objects
     let todaysDate = moment().format('ll');//Date For Header
@@ -65,10 +64,13 @@
         $buttonCol.addClass("col-sm-2");
         $newRow.append($buttonCol);
         let $newButton = $("<button>");
-        $newButton.addClass("saveBtn")
-        $newButton.attr("value", workHours[currentIndex])
-        $newButton.text("SAVE");
+        $newButton.addClass("saveBtn");
+        $newButton.attr("value", workHours[currentIndex]);
         $buttonCol.append($newButton);
+        let $buttonI = $("<i>");
+        $buttonI.addClass("far fa-save");
+        $buttonI.attr("value", workHours[currentIndex]);
+        $newButton.append($buttonI)
     }//End createRow()
 
     
@@ -130,6 +132,7 @@
                 return;
             }
         }
+
     }//End updateList()
 
     /*
@@ -187,19 +190,22 @@
         Return: None
     */
     $("section").click(function(event){
-
+        
+        console.log(event.target.matches("i"));
         //Check If Event was a button
-        if(event.target.matches("button"))
+        if(event.target.matches("button") || event.target.matches("i"))
         {
             //Grab Content from Section El
             let content = this.children[1].children[0].value;
+            let taskTime = this.children[2].children[0].value;
 
             //Create Object for task
             let newObj = {
-                time: event.target.value,
+                time: taskTime,
                 task: content                
             }
             
+            console.log(newObj);
             //Update Task in the toDoList Array
             updateList(newObj, content);
 
@@ -209,9 +215,5 @@
         }
 
     });//End section Click Event
-
-    
-
-
 
 });
