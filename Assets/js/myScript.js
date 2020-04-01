@@ -1,4 +1,4 @@
-//  $(document).ready(function() {
+$(document).ready(function() {
 
     //Local Variables To Be Used
     let toDoList = [];//List to hold rask objects
@@ -26,7 +26,6 @@
         {
             createRow(i);
         }
-
     }//End Init()
 
     /*
@@ -37,7 +36,6 @@
     */
     function createRow(currentIndex)
     {
-
         //Add new Row
         let $newRow = $("<section>");
         $newRow.addClass("row") 
@@ -67,9 +65,8 @@
         $newButton.addClass("saveBtn");
         $newButton.attr("value", workHours[currentIndex]);
         $buttonCol.append($newButton);
-        let $buttonI = $("<i>");
+        let $buttonI = $("<i>");//Icon for the save button
         $buttonI.addClass("far fa-save");
-        $buttonI.attr("value", workHours[currentIndex]);
         $newButton.append($buttonI)
     }//End createRow()
 
@@ -121,7 +118,6 @@
     */
     function updateList(theObj, currentTask)
     {
-        console.log(toDoList);
         //Go through current to do list to see if the obj exists in it
         for(let i = 0; i < toDoList.length; i++)
         {
@@ -148,7 +144,6 @@
     {
         //empty text to ensure that 
         let toDoText = "";
-
         //Go through toDoList To check if time has been logged
         for(let a = 0; a < toDoList.length; a++)
         {
@@ -159,9 +154,7 @@
                 toDoText = toDoList[a].task;
                 break;
             }
-
         }
-
         //Return task or empty string
         return toDoText;
     }//End checkForTask()
@@ -193,16 +186,12 @@
         Return: None
     */
     $("section").click(function(event){
-        
-        console.log(event.target.matches("i"));
         //Check If Event was a button
         if(event.target.matches("button") || event.target.matches("i"))
         {
-            console.log(this);
             //Grab Content from Section El
             let content = this.children[1].children[0].value;
             let taskTime = this.children[2].children[0].value;
-
             //Create Object for task
             let newObj = {
                 time: taskTime,
@@ -210,12 +199,8 @@
             }
             //Update Task in the toDoList Array
             updateList(newObj, content);
-
             //Update Local Storage with toDoList
             localStorage.setItem("toDo", JSON.stringify(toDoList));
-
         }
-
     });//End section Click Event
-
-// });
+});
