@@ -1,4 +1,4 @@
- $(document).ready(function() {
+//  $(document).ready(function() {
 
     //Local Variables To Be Used
     let toDoList = [];//List to hold rask objects
@@ -121,6 +121,7 @@
     */
     function updateList(theObj, currentTask)
     {
+        console.log(toDoList);
         //Go through current to do list to see if the obj exists in it
         for(let i = 0; i < toDoList.length; i++)
         {
@@ -132,6 +133,8 @@
                 return;
             }
         }
+
+        toDoList.push(theObj);
 
     }//End updateList()
 
@@ -195,9 +198,12 @@
         //Check If Event was a button
         if(event.target.matches("button") || event.target.matches("i"))
         {
+            console.log(this);
             //Grab Content from Section El
             let content = this.children[1].children[0].value;
             let taskTime = this.children[2].children[0].value;
+            console.log(content);
+            console.log(taskTime);
 
             //Create Object for task
             let newObj = {
@@ -216,4 +222,4 @@
 
     });//End section Click Event
 
-});
+// });
