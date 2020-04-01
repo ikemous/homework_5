@@ -62,6 +62,17 @@
         function init()
         {
 
+          //Grab toDoList From The Local Storage
+          toDoList = JSON.parse(localStorage.getItem("toDo"));
+          
+          //Check If The toDoList is empty
+          if(toDoList === null)
+          {
+              //Make toDoList List An Empty Array
+              toDoList = [];  
+          }
+
+          console.log(toDoList);
           //Display Todays Date
           $("#currentDay").text(todaysDate);
 
@@ -98,7 +109,27 @@
             $newRow.append($textAreaCol);
 
             let $newTextArea = $("<textarea>");
-            if(currentHour < workHours[i])
+            
+            let toDoText;
+            let alreadySubmitted = false;
+
+            for(let a = 0; a < toDoList.length; a++)
+            {
+              if(toDoList[a].time == workHours[i])
+              {
+                alreadySubmitted = true;
+                toDoText = toDoList[a].task;
+              }
+
+            }
+
+            if(alreadySubmitted === true)
+            {
+              $newTextArea.val(toDoText);
+            }
+
+
+            if(currentHour > workHours[i])
             {
               $newTextArea.addClass("past");              
             }
@@ -163,109 +194,6 @@
 
 
 
-
-
-       //#region commentedCode
-
-        // function init(){
-
-        //   //Grab toDoList From The Local Storage
-        //   toDoList = JSON.parse(localStorage.getItem("toDo"));
-          
-        //   //Check If The toDoList is empty
-        //   if(toDoList === null)
-        //   {
-        //       //Make toDoList List An Empty Array
-        //       toDoList = [];
-        //   }
-
-        //   for(let i = 0; i < 8; i++)
-        //   {
-        //     let rowHour = i+9;
-
-        //     let $newDiv = $("<div>");
-        //     $newDiv.attr("class", "row")
-        //     $(".container").append($newDiv);
-
-        //     let $hourDiv = $("<div>");
-        //     $hourDiv.attr("class", "hour col-sm-2");
-        //     $newDiv.append($hourDiv);
-
-        //     let $hourText = $("<h1>");
-        //     $hourDiv.append($hourText);
-
-            
-        //     let $hourSpan = $("<span>");
-        //     $hourSpan.attr("data-index", rowHour);
-        //     if(rowHour <= 11)
-        //     {
-        //     $hourSpan.text(rowHour + "am");
-        //     }
-        //     else
-        //     {
-        //     $hourSpan.text(rowHour + "pm");
-        //     }
-        //     $hourText.append($hourSpan);
-
-        //     let $journalDiv = $("<div>");
-        //     $journalDiv.attr("class", "col-sm-8");
-        //     $newDiv.append($journalDiv);
-
-        //     let $journalText = $("<textarea>");
-        //     $journalText.attr("data-index", rowHour);
-        //     $journalText.attr("class", rowHour);
-        //     if(rowHour === time)
-        //     {
-        //       $journalText.addClass("present");
-        //     }
-        //     else if(rowHour < time )
-        //     {
-        //       $journalText.addClass("past");
-        //     }
-        //     else
-        //     {
-        //       $journalText.addClass("future");
-        //     }
-        //     $journalDiv.append($journalText);
-
-        //     let $saveDiv = $("<div>");
-        //     $saveDiv.attr("class", "col-sm-2");
-        //     $newDiv.append($saveDiv);
-
-        //     let $saveButton = $("<button>");
-        //     $saveButton.attr("class", "col.sm-2 saveBtn");
-        //     $saveButton.attr("value", rowHour);
-        //     $saveButton.text("Save");
-        //     $saveDiv.append($saveButton);
-
-        //   }
-        // }
-
-
-        // $(".saveBtn").click(function(){
-
-        //   let newToDo = {
-        //     taskTime: "",
-        //     task: ""
-        //   } 
-
-        //   newToDo.taskTime = this.value;
-
-        //   newToDo.task = $("." + newToDo.taskTime).val();
-        //   if(toDoList.includes(newToDo.taskTime))
-        //   {
-        //     console.log("Includes");
-        //   }
-        //   else
-        //   {
-        //     toDoList.push(newToDo);
-        //   }
-        //   //Store Array Into localStorage
-        //   localStorage.setItem("toDo", JSON.stringify(toDoList));
-
-        // });
-
-        //#endregion commentedCode
 
       // });
 
