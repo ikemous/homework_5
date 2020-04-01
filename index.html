@@ -38,110 +38,181 @@
     <script>
       $(document).ready(function() {
 
-        let dt = new Date();
-        let time = dt.getHours();
-        let currentObj;
+
+        //Display The Current Date On The Top
+
+        //Create a Table
+          //Rows
+            //Display Work Hours
+            //Display Input
+              //Change Colors Based On Time (Past, Present, Future)
+            //Display Save Button Save Button
+              //Store To Local Storage when save Is Pressed
+
         let toDoList = [];
-        
+        let todaysDate = moment().format('ll');
+        let currentHour = new Date().getHours();
+        let workhours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
+
+        console.log(currentHour);
+
         init();
+        
 
-        function init(){
+        function init()
+        {
+          //Display Todays Date
+          $("#currentDay").text(todaysDate);
 
-          //Grab toDoList From The Local Storage
-          toDoList = JSON.parse(localStorage.getItem("toDo"));
+          let $newTable = $("<table>");
+          $newTable.attr("style", "width: 100%");
+          $(".container").append($newTable); 
           
-          //Check If The toDoList is empty
-          if(toDoList === null)
+
+          for(let i = 0; i < workhours.length; i++)
           {
-              //Make toDoList List An Empty Array
-              toDoList = [];
+            //Add new Row
+            let $newRow = $("<tr>");
+            $newRow.addClass("row") 
+            $newTable.append($newRow);
+
+            //Add Hour Column To Row
+            let $hourCol = $("<td>");
+            if(workhours[i] > 12)
+            {
+              $hourCol.text(workhours[i] + "pm");
+            }
+            else
+            {
+              $hourCol.text(workhours[i] + "am");
+            }
+            $hourCol.addClass("hour col-sm-2");
+            $newRow.append($hourCol);
+
+
+            //Add Input To Row
+            let $inputCol = $("<textarea>");
+            $inputCol.addClass("col-sm-8");
+            if(workhours[i] < currentHour)
+            {
+              $inputCol.addClass("past");
+            }
+            else if(workhours[i] === currentHour)
+            {
+              $inputCol.addClass("present");
+            }
+            else
+            {
+              $inputCol.addClass("future");
+            }
+            $newRow.append($inputCol);
+
+
+            let $saveButtonCol = $("<button>");
+            $saveButtonCol.addClass("saveBtn col-sm-2");
+            $newRow.append($saveButtonCol);             
+
           }
 
-          for(let i = 0; i < 8; i++)
-          {
-            let rowHour = i+9;
+        }//End Init()
 
-            let $newDiv = $("<div>");
-            $newDiv.attr("class", "row")
-            $(".container").append($newDiv);
+        // function init(){
 
-            let $hourDiv = $("<div>");
-            $hourDiv.attr("class", "hour col-sm-2");
-            $newDiv.append($hourDiv);
+        //   //Grab toDoList From The Local Storage
+        //   toDoList = JSON.parse(localStorage.getItem("toDo"));
+          
+        //   //Check If The toDoList is empty
+        //   if(toDoList === null)
+        //   {
+        //       //Make toDoList List An Empty Array
+        //       toDoList = [];
+        //   }
 
-            let $hourText = $("<h1>");
-            $hourDiv.append($hourText);
+        //   for(let i = 0; i < 8; i++)
+        //   {
+        //     let rowHour = i+9;
+
+        //     let $newDiv = $("<div>");
+        //     $newDiv.attr("class", "row")
+        //     $(".container").append($newDiv);
+
+        //     let $hourDiv = $("<div>");
+        //     $hourDiv.attr("class", "hour col-sm-2");
+        //     $newDiv.append($hourDiv);
+
+        //     let $hourText = $("<h1>");
+        //     $hourDiv.append($hourText);
 
             
-            let $hourSpan = $("<span>");
-            $hourSpan.attr("data-index", rowHour);
-            if(rowHour <= 11)
-            {
-            $hourSpan.text(rowHour + "am");
-            }
-            else
-            {
-            $hourSpan.text(rowHour + "pm");
-            }
-            $hourText.append($hourSpan);
+        //     let $hourSpan = $("<span>");
+        //     $hourSpan.attr("data-index", rowHour);
+        //     if(rowHour <= 11)
+        //     {
+        //     $hourSpan.text(rowHour + "am");
+        //     }
+        //     else
+        //     {
+        //     $hourSpan.text(rowHour + "pm");
+        //     }
+        //     $hourText.append($hourSpan);
 
-            let $journalDiv = $("<div>");
-            $journalDiv.attr("class", "col-sm-8");
-            $newDiv.append($journalDiv);
+        //     let $journalDiv = $("<div>");
+        //     $journalDiv.attr("class", "col-sm-8");
+        //     $newDiv.append($journalDiv);
 
-            let $journalText = $("<textarea>");
-            $journalText.attr("data-index", rowHour);
-            $journalText.attr("class", rowHour);
-            if(rowHour === time)
-            {
-              $journalText.addClass("present");
-            }
-            else if(rowHour < time )
-            {
-              $journalText.addClass("past");
-            }
-            else
-            {
-              $journalText.addClass("future");
-            }
-            $journalDiv.append($journalText);
+        //     let $journalText = $("<textarea>");
+        //     $journalText.attr("data-index", rowHour);
+        //     $journalText.attr("class", rowHour);
+        //     if(rowHour === time)
+        //     {
+        //       $journalText.addClass("present");
+        //     }
+        //     else if(rowHour < time )
+        //     {
+        //       $journalText.addClass("past");
+        //     }
+        //     else
+        //     {
+        //       $journalText.addClass("future");
+        //     }
+        //     $journalDiv.append($journalText);
 
-            let $saveDiv = $("<div>");
-            $saveDiv.attr("class", "col-sm-2");
-            $newDiv.append($saveDiv);
+        //     let $saveDiv = $("<div>");
+        //     $saveDiv.attr("class", "col-sm-2");
+        //     $newDiv.append($saveDiv);
 
-            let $saveButton = $("<button>");
-            $saveButton.attr("class", "col.sm-2 saveBtn");
-            $saveButton.attr("value", rowHour);
-            $saveButton.text("Save");
-            $saveDiv.append($saveButton);
+        //     let $saveButton = $("<button>");
+        //     $saveButton.attr("class", "col.sm-2 saveBtn");
+        //     $saveButton.attr("value", rowHour);
+        //     $saveButton.text("Save");
+        //     $saveDiv.append($saveButton);
 
-          }
-        }
+        //   }
+        // }
 
 
-        $(".saveBtn").click(function(){
+        // $(".saveBtn").click(function(){
 
-          let newToDo = {
-            taskTime: "",
-            task: ""
-          } 
+        //   let newToDo = {
+        //     taskTime: "",
+        //     task: ""
+        //   } 
 
-          newToDo.taskTime = this.value;
+        //   newToDo.taskTime = this.value;
 
-          newToDo.task = $("." + newToDo.taskTime).val();
-          if(toDoList.includes(newToDo.taskTime))
-          {
-            console.log("Includes");
-          }
-          else
-          {
-            toDoList.push(newToDo);
-          }
-          //Store Array Into localStorage
-          localStorage.setItem("toDo", JSON.stringify(toDoList));
+        //   newToDo.task = $("." + newToDo.taskTime).val();
+        //   if(toDoList.includes(newToDo.taskTime))
+        //   {
+        //     console.log("Includes");
+        //   }
+        //   else
+        //   {
+        //     toDoList.push(newToDo);
+        //   }
+        //   //Store Array Into localStorage
+        //   localStorage.setItem("toDo", JSON.stringify(toDoList));
 
-        });
+        // });
 
       });
 
