@@ -36,7 +36,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script>
-      $(document).ready(function() {
+      // $(document).ready(function() {
 
 
         //Display The Current Date On The Top
@@ -52,7 +52,7 @@
         let toDoList = [];
         let todaysDate = moment().format('ll');
         let currentHour = new Date().getHours();
-        let workhours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
+        let workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
 
         console.log(currentHour);
 
@@ -61,60 +61,111 @@
 
         function init()
         {
+
           //Display Todays Date
           $("#currentDay").text(todaysDate);
 
-          let $newTable = $("<table>");
-          $newTable.attr("style", "width: 100%");
+          let $newTable = $("<div>");
           $(".container").append($newTable); 
           
 
-          for(let i = 0; i < workhours.length; i++)
+          for(let i = 0; i < workHours.length; i++)
           {
             //Add new Row
-            let $newRow = $("<tr>");
+            let $newRow = $("<section>");
             $newRow.addClass("row") 
             $newTable.append($newRow);
 
             //Add Hour Column To Row
-            let $hourCol = $("<td>");
-            if(workhours[i] > 12)
-            {
-              $hourCol.text(workhours[i] + "pm");
-            }
-            else
-            {
-              $hourCol.text(workhours[i] + "am");
-            }
-            $hourCol.addClass("hour col-sm-2");
+            let $hourCol = $("<article>");
+            $hourCol.addClass("time-block col-sm-2");
             $newRow.append($hourCol);
 
-
-            //Add Input To Row
-            let $inputCol = $("<textarea>");
-            $inputCol.addClass("col-sm-8");
-            if(workhours[i] < currentHour)
+            let $hourText = $("<h2>");
+            $hourText.addClass("hour");
+            if(workHours[i] > 12)
             {
-              $inputCol.addClass("past");
-            }
-            else if(workhours[i] === currentHour)
-            {
-              $inputCol.addClass("present");
+              $hourText.text((workHours[i] - 12)  + "pm");
             }
             else
             {
-              $inputCol.addClass("future");
+              $hourText.text(workHours[i] + "am");
             }
-            $newRow.append($inputCol);
+            $hourCol.append($hourText);
 
+            let $textAreaCol = $("<article>");
+            $textAreaCol.addClass("col-sm-8");  
+            $newRow.append($textAreaCol);
 
-            let $saveButtonCol = $("<button>");
-            $saveButtonCol.addClass("saveBtn col-sm-2");
-            $newRow.append($saveButtonCol);             
+            let $newTextArea = $("<textarea>");
+            if(currentHour < workHours[i])
+            {
+              $newTextArea.addClass("past");              
+            }
+            else if(currentHour === workHours[i])
+            {
+              $newTextArea.addClass("present");
+            }
+            else
+            {
+              $newTextArea.addClass("future");
+            }
+            $textAreaCol.append($newTextArea);
 
+            let $buttonCol = $("<article>");
+            $buttonCol.addClass("col-sm-2");
+            $newRow.append($buttonCol);
+            
+            let $newButton = $("<button>");
+            $newButton.addClass("saveBtn")
+            $newButton.attr("value", workHours[i])
+            $newButton.text("SAVE");
+            $buttonCol.append($newButton);
           }
 
         }//End Init()
+
+        $("section").click(function(event){
+
+          let content = this.children[1].children[0].value;
+
+            if(event.target.matches("button"))
+            {
+              let newObj = {
+                time: event.target.value,
+                task: content                
+              }
+              
+              let alreadySubmitted = false;
+
+              for(let i = 0; i < toDoList.length; i++)
+              {
+                if(toDoList[i].time === newObj.time)
+                {
+                  alreadySubmitted = true;
+                  toDoList[i].task = content;
+                }
+              }
+
+              if(alreadySubmitted === false)
+              {
+              toDoList.push(newObj);
+              }
+
+              
+              localStorage.setItem("toDo", JSON.stringify(toDoList));
+
+            }
+        });//End tr Click Event
+
+
+
+
+
+
+
+
+       //#region commentedCode
 
         // function init(){
 
@@ -214,7 +265,9 @@
 
         // });
 
-      });
+        //#endregion commentedCode
+
+      // });
 
     </script>
   </body>
