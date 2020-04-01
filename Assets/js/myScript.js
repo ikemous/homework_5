@@ -202,16 +202,12 @@
             //Grab Content from Section El
             let content = this.children[1].children[0].value;
             let taskTime = this.children[2].children[0].value;
-            console.log(content);
-            console.log(taskTime);
 
             //Create Object for task
             let newObj = {
                 time: taskTime,
                 task: content                
             }
-            
-            console.log(newObj);
             //Update Task in the toDoList Array
             updateList(newObj, content);
 
