@@ -7,6 +7,8 @@ $(document).ready(function() {
     let workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17];//Array For business hours
     let $mainCont = $(".container");//Main Container to hold all rows
 
+    console.log(moment().format());
+
     init();
     
     /*
