@@ -20,13 +20,17 @@ $(document).ready(function() {
     {
         //Check if there are local storage items
         checkLocalStorage();
+
         //Display Todays Date
-        $("#currentDay").text(todaysDate);        
+        $("#currentDay").text(todaysDate);   
+             
         //Create a Row For Each Business Hour
         for(let i = 0; i < workHours.length; i++)
         {
             createRow(i);
         }
+
+
     }//End Init()
 
     /*
@@ -47,7 +51,6 @@ $(document).ready(function() {
         $newRow.append($hourCol);
         let $hourText = $("<h2>");
         $hourText.addClass("hour");
-        $hourText.text()
         $hourText.text(checkAmOrPm(workHours[currentIndex]));
         $hourCol.append($hourText);
         //Add TextArea
@@ -68,9 +71,9 @@ $(document).ready(function() {
         $buttonCol.append($newButton);
         let $buttonI = $("<i>");//Icon for the save button
         $buttonI.addClass("far fa-save");
-        $newButton.append($buttonI)
-    }//End createRow()
+        $newButton.append($buttonI);
 
+    }//End createRow()
     
     /*
         checkLocalStorage()
@@ -187,8 +190,10 @@ $(document).ready(function() {
         Return: None
     */
     $("section").click(function(event){
-        //Check If Event was a button
-        if(event.target.matches("button") || event.target.matches("i"))
+        console.log("clicked");
+
+        //Check If Event was a button and not the last two buttons
+        if(event.target.id !== "clear" && event.target.id !== "saveAll" && event.target.matches("button") || event.target.matches("i") )
         {
             //Grab Content from Section El
             let content = this.children[1].children[0].value;
@@ -203,5 +208,8 @@ $(document).ready(function() {
             //Update Local Storage with toDoList
             localStorage.setItem("toDo", JSON.stringify(toDoList));
         }
+
     });//End section Click Event
+
+    
 });
