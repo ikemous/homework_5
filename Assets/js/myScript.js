@@ -3,11 +3,10 @@ $(document).ready(function() {
     //Local Variables To Be Used
     let toDoList = [];//List to hold rask objects
     let todaysDate = moment().format('ll');//Date For Header
-    let currentHour = new Date().getHours();//Hour To Help assign classes to text columns
+    let currentHour = moment().format('H');//Hour To Help assign classes to text columns
     let workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17];//Array For business hours
     let $mainCont = $(".container");//Main Container to hold all rows
 
-    console.log(moment().format());
 
     init();
     
