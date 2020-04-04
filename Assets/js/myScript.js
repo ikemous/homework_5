@@ -193,7 +193,7 @@ $(document).ready(function() {
         console.log("clicked");
 
         //Check If Event was a button and not the last two buttons
-        if(event.target.id !== "clear" && event.target.id !== "saveAll" && event.target.matches("button") || event.target.matches("i") )
+        if(event.target.matches("button") || event.target.matches("i") )
         {
             //Grab Content from Section El
             let content = this.children[1].children[0].value;
